@@ -1,0 +1,115 @@
+.customersPage {
+  padding: 24px;
+  background-color: var(--clr-bg-secondary);
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--clr-txt-primary);
+  }
+
+  &__addButton {
+    background-color: var(--clr-accent-1);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(var(--clr-accent-1-rgb), 0.8);
+    }
+
+    &:focus {
+      outline: 2px solid rgba(var(--clr-accent-1-rgb), 0.6);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+
+    th,
+    td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: var(--fs-sm);
+      color: var(--clr-txt-primary);
+    }
+
+    th {
+      background-color: var(--clr-accent-1);
+      color: white;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: rgba(var(--clr-accent-1-rgb), 0.1);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  &__paginationButton {
+    background-color: var(--clr-accent-1);
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(var(--clr-accent-1-rgb), 0.8);
+    }
+
+    &:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+
+    &:focus {
+      outline: 2px solid rgba(var(--clr-accent-1-rgb), 0.6);
+      outline-offset: 2px;
+    }
+  }
+
+  &__paginationInfo {
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    color: var(--clr-txt-primary);
+  }
+}

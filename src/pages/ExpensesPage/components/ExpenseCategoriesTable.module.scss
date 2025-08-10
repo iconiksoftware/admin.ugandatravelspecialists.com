@@ -1,0 +1,144 @@
+.expenseCategoriesTable {
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  button {
+    background-color: #23449c;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #1b3783;
+    }
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background-color: #f1f1f1;
+
+    th {
+      text-align: left;
+      padding: 0.75rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #e0e0e0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      td {
+        padding: 0.75rem;
+        vertical-align: top;
+        font-size: 0.95rem;
+        color: #333;
+      }
+    }
+  }
+}
+
+.description {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #555;
+}
+
+.actionsHeader {
+  text-align: right;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+
+  button {
+    padding: 0.3rem 0.75rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+}
+
+.editButton {
+  background-color: #ffe9b5;
+  color: #7a5700;
+
+  &:hover {
+    background-color: #ffe19a;
+  }
+}
+
+.deleteButton {
+  background-color: #ffd5d5;
+  color: #911111;
+
+  &:hover {
+    background-color: #ffbfbf;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  button {
+    padding: 0.4rem 1rem;
+    border: none;
+    background-color: #23449c;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+
+    &:disabled {
+      background-color: #a6b2d6;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: #1b3783;
+    }
+  }
+
+  span {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+}

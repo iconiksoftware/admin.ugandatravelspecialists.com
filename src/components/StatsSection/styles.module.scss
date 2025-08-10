@@ -1,0 +1,93 @@
+@use '../../styles/utils';
+
+.statsSection {
+  background-color: var(--clr-bg-primary);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px; // Consistent spacing after the section
+  box-shadow: 0 4px 15px var(--clr-shadow);
+
+  h2 {
+    // Title for the entire stats section, if provided
+    font-family: var(--ff-headings);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-bold);
+    color: var(--clr-txt-primary-on-bg-primary);
+    margin-bottom: 14px;
+    text-align: center; // Mobile-first center
+    @include utils.respond-to('lg-screens') {
+      text-align: left; // Left align on desktop
+    }
+  }
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr; // Single column on mobile
+  gap: 14px;
+
+  @include utils.respond-to('md-screens') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include utils.respond-to('lg-screens') {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.statCard {
+  background-color: var(--clr-bg-secondary);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .statIconWrapper {
+    background-color: #e6f5f1; // Light green for icon background (fixed value for now)
+    border-radius: 50%;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .statIcon {
+    color: var(--clr-accent-1); // Accent color for icon
+  }
+
+  .statValue {
+    font-family: var(--ff-headings);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-bold);
+    color: var(--clr-accent-2); // Using secondary accent for values for variety
+    margin-bottom: 5px;
+
+    @include utils.respond-to('lg-screens') {
+      font-size: var(--fs-lg);
+    }
+  }
+
+  .statTitle {
+    font-family: var(--ff-body);
+    font-size: var(--fs-base);
+    font-weight: var(--fw-semibold);
+    color: var(--clr-txt-primary-on-bg-secondary);
+    margin-bottom: 5px;
+  }
+
+  .statDescription {
+    font-family: var(--ff-body);
+    font-size: var(--fs-sm);
+    color: var(--clr-txt-secondary-on-bg-secondary);
+    margin-bottom: 0;
+  }
+}

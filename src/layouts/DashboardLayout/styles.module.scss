@@ -1,0 +1,359 @@
+@use 'sass:color';
+
+@use '../../styles/utils';
+
+.dashboardLayout {
+  display: flex;
+  height: 100%;
+
+  --sidebar-width: 280px;
+  --top-bar-height: 60px;
+
+  .sidebar {
+    width: var(--sidebar-width); // Default desktop width
+    flex-shrink: 0; // Prevent shrinking
+    background-color: #111111; // Darker background for sidebar
+    color: var(--clr-txt-primary-on-bg-accent-1); // White text
+    // Mobile-first: This is the drawer state
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1000; // High z-index for mobile drawer
+    transform: translateX(-100%); // Hidden by default
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2); // Stronger shadow for drawer
+    transition: transform 0.3s ease-in-out; // For drawer slide
+    display: flex;
+    flex-direction: column;
+    padding: 16px 0;
+
+    &.open {
+      transform: translateX(0); // Slide in when open
+    }
+
+    // Desktop: Always visible
+    @include utils.respond-to('lg-screens') {
+      position: fixed; // Make it sticky for scrolling content
+      top: 0;
+      left: 0;
+      height: 100vh; // Take full viewport height on desktop
+      z-index: 10; // Ensure it's above main content for desktop fixed effect
+      transform: translateX(0); // Always visible on desktop
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); // Lighter shadow for fixed sidebar
+    }
+
+    .sidebarHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px 30px 20px;
+
+      .logo {
+        height: 52px;
+
+        img {
+          height: 100%;
+          width: auto;
+          display: block;
+        }
+      }
+
+      .closeMobileDrawerButton {
+        background: none;
+        border: none;
+        color: var(--clr-txt-primary-on-bg-accent-1);
+        cursor: pointer;
+        display: block; // Visible on mobile by default
+        @include utils.respond-to('lg-screens') {
+          // Hide on desktop
+          display: none;
+        }
+      }
+    }
+
+    .navbarNav {
+      flex-grow: 1; // Take up available space
+      overflow-y: auto; // Allow navigation to scroll if many items
+      padding-bottom: 20px; // Padding at the bottom for scrolling content
+      @include utils.remove-scrollbar();
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      li {
+        margin-bottom: 5px;
+      }
+
+      .navSection {
+        margin-bottom: 14px; // Space after each section group
+        @include utils.remove-scrollbar();
+      }
+
+      .navSectionHeader {
+        font-family: var(--ff-body); // Use body font for clarity
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-semibold);
+        color: rgba(255, 255, 255, 0.4); // Lighter, subtle grey for header
+        text-transform: uppercase;
+        padding: 8px 20px;
+        margin-bottom: 4px;
+        letter-spacing: 0.05em;
+      }
+
+      .navLink,
+      .navLinkActive {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 16px;
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.7); // Lighter white for default
+        font-family: var(--ff-body);
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-medium);
+        transition: background-color 0.2s ease, color 0.2s ease;
+        border-left: 4px solid transparent; // For active indicator
+
+        .navIcon {
+          color: rgba(255, 255, 255, 0.6); // Lighter icon color
+        }
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+          color: white;
+          .navIcon {
+            color: white;
+          }
+        }
+      }
+
+      .navLinkActive {
+        background-color: rgba(var(--clr-accent-1-rgb), 0.2);
+        color: var(--clr-accent-1);
+        font-weight: var(--fw-semibold);
+        border-left-color: var(--clr-accent-1);
+
+        .navIcon {
+          color: var(--clr-accent-1);
+        }
+      }
+
+      .sectionDivider {
+        height: 1px;
+        background-color: rgba(255, 255, 255, 0.1);
+        margin: 14px 20px;
+      }
+    }
+
+    .sidebarFooter {
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      li {
+        margin-bottom: 5px;
+      }
+
+      .navLink,
+      .logoutButton {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 12px 20px;
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.7);
+        font-family: var(--ff-body);
+        font-size: var(--fs-base);
+        font-weight: var(--fw-medium);
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        transition: background-color 0.2s ease, color 0.2s ease;
+
+        .navIcon {
+          color: rgba(255, 255, 255, 0.6);
+        }
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+          color: white;
+          .navIcon {
+            color: white;
+          }
+        }
+      }
+
+      .navLink,
+      .navLinkActive {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 12px 20px;
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.7); // Lighter white for default
+        font-family: var(--ff-body);
+        font-size: var(--fs-base);
+        font-weight: var(--fw-medium);
+        transition: background-color 0.2s ease, color 0.2s ease;
+        border-left: 4px solid transparent; // For active indicator
+
+        .navIcon {
+          color: rgba(255, 255, 255, 0.6); // Lighter icon color
+        }
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1); // Subtle hover
+          color: white;
+          .navIcon {
+            color: white;
+          }
+        }
+      }
+
+      .navLinkActive {
+        background-color: rgba(var(--clr-accent-1-rgb), 0.2);
+        color: var(--clr-accent-1);
+        font-weight: var(--fw-semibold);
+        border-left-color: var(--clr-accent-1); // Solid accent line
+
+        .navIcon {
+          color: var(--clr-accent-1);
+        }
+      }
+
+      .logoutButton {
+        color: #ff6b6b; // Red for logout button
+        .navIcon {
+          color: #ff6b6b;
+        }
+        &:hover {
+          background-color: rgba(255, 107, 107, 0.2);
+          color: #ffcccc; // Lighter red on hover
+          .navIcon {
+            color: #ffcccc;
+          }
+        }
+      }
+    }
+  }
+
+  .topbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: var(--top-bar-height);
+    background-color: var(--clr-bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    z-index: 5;
+
+    @include utils.respond-to('lg-screens') {
+      left: var(--sidebar-width);
+    }
+
+    .menuToggleButton {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--clr-txt-primary-on-bg-primary);
+      display: block; // Visible on mobile by default
+      @include utils.respond-to('lg-screens') {
+        // Hide on desktop
+        display: none;
+      }
+    }
+
+    .topbarTitle {
+      font-family: var(--ff-headings);
+      font-size: var(--fs-md);
+      font-weight: var(--fw-bold);
+      color: var(--clr-txt-primary-on-bg-primary);
+      flex-grow: 1;
+      text-align: center; // Center title on mobile
+      @include utils.respond-to('lg-screens') {
+        // Desktop
+        text-align: left;
+        font-size: var(--fs-lg);
+        padding-left: 0; // No padding needed here as it's part of mainContent
+      }
+    }
+
+    .userProfile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .userName {
+        display: none;
+        margin: 0;
+        font-weight: var(--fw-bold);
+
+        @include utils.respond-to('lg-screens') {
+          display: block;
+        }
+      }
+
+      .userAvatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--clr-accent-1);
+      }
+    }
+  }
+
+  // --- Main Content Area Styles ---
+  .mainContent {
+    height: 100%;
+    margin-top: var(--top-bar-height);
+    flex-grow: 1;
+    background-color: var(--clr-bg-secondary);
+    display: flex;
+    flex-direction: column;
+
+    @include utils.respond-to('lg-screens') {
+      margin-left: var(--sidebar-width);
+    }
+
+    .pageContent {
+      height: 100%;
+      padding: 16px;
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+  }
+
+  // Overlay for mobile drawer when open
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none; // Hidden by default (mobile-first)
+
+    // Only show the overlay when the drawer is open (controlled by JS/TS `isDrawerOpen` state)
+    // and only on screens where the sidebar is a drawer (mobile/md-screens)
+    @include utils.respond-to('lg-screens') {
+      // Hide overlay on desktop
+      display: none !important; // Important to ensure it's hidden on desktop even if state is open
+    }
+  }
+}

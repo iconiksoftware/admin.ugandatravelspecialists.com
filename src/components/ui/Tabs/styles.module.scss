@@ -1,0 +1,76 @@
+@use '../../styles/utils';
+
+.tabsContainer {
+  width: 100%;
+}
+
+.tabHeaders {
+  display: flex;
+  gap: 10px; // Space between tabs
+  border-bottom: 2px solid var(--clr-border-secondary-on-bg-primary); // Underline for tabs
+  margin-bottom: 20px; // Space between headers and content
+  justify-content: flex-start; // Align tabs to the left
+
+  @include utils.respond-to('md-screens') {
+    gap: 0; // Remove gap if you want them tightly packed on desktop
+    justify-content: flex-start; // Ensure left alignment on desktop
+  }
+}
+
+.tabHeader {
+  background-color: transparent;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-family: var(--ff-body);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  color: var(--clr-txt-secondary-on-bg-primary);
+  transition: color 0.2s ease, background-color 0.2s ease;
+  position: relative;
+  overflow: hidden; // For the active line
+  border-radius: 8px 8px 0 0; // Rounded top corners for tabs
+
+  // Mobile: Stack tabs
+  width: 100%;
+  text-align: left;
+  // &:not(:last-child) {
+  //   margin-bottom: 5px; // Space between stacked tabs
+  // }
+
+  @include utils.respond-to('md-screens') {
+    width: auto; // Auto width on desktop
+    text-align: center;
+    margin-bottom: 0; // No margin when side-by-side
+    // Optional: Add a slight border between tabs on desktop if desired
+    // border-right: 1px solid rgba(0,0,0,0.05);
+  }
+
+  &:hover {
+    color: var(--clr-txt-primary-on-bg-primary);
+    background-color: var(--clr-bg-secondary); // Subtle hover background
+  }
+
+  &.active {
+    color: var(--clr-accent-1); // Accent color for active tab text
+    background-color: var(--clr-bg-primary); // Background matches content
+    border-bottom: 2px solid var(--clr-accent-1); // Active indicator line
+    font-weight: var(--fw-bold);
+    z-index: 1; // Bring active tab slightly forward
+  }
+}
+
+.tabContent {
+  // Ensure the content area has a background and padding consistent with a card
+  background-color: var(--clr-bg-primary);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px var(--clr-shadow);
+  padding: 20px; // Padding for the content itself
+
+  .tabPanel {
+    display: none; // Hidden by default (for non-active tabs)
+    &.active {
+      display: block; // Show active tab content
+    }
+  }
+}

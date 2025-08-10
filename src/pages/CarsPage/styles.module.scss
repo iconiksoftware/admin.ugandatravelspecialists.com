@@ -1,0 +1,114 @@
+@use '../../styles/utils' as *;
+
+.carsPage {
+  background-color: var(--clr-bg-primary);
+  color: var(--clr-txt-primary-on-bg-primary);
+  min-height: calc(100vh - var(--header-height));
+  font-family: var(--ff-body);
+  padding-top: var(--spacing-8xl);
+  padding-bottom: var(--spacing-8xl);
+  border-radius: var(--radius-sm);
+  @include add-section-lr-padding();
+}
+
+.searchBarContainer {
+  margin-bottom: var(--spacing-sm);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.searchInput {
+  width: 100%;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-base);
+  border: 1px solid var(--clr-border-primary-on-bg-primary);
+  background-color: var(--clr-bg-secondary);
+  font-family: var(--ff-body);
+  font-size: var(--fs-base);
+  color: var(--clr-txt-primary-on-bg-secondary);
+  transition: all var(--animation-duration-200) var(--animation-fn-ease);
+  box-shadow: 0 2px 4px var(--clr-shadow);
+
+  &:focus {
+    outline: none;
+    border-color: var(--clr-accent-1);
+    box-shadow: 0 0 0 2px rgba(var(--clr-accent-1), 0.2);
+  }
+}
+
+.ctaButton {
+  background-color: var(--clr-bg-accent-1);
+  color: var(--clr-txt-primary-on-accent-1);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--animation-duration-200) var(--animation-fn-ease);
+  border: none;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--spacing-2xl);
+  margin-top: var(--spacing-md);
+}
+
+.carsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.carCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 10px var(--clr-shadow);
+  transition: transform var(--animation-duration-300) var(--animation-fn-ease);
+  cursor: pointer;
+  height: 320px;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(var(--clr-shadow-rgb), 0.2);
+  }
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform var(--animation-duration-500) var(--animation-fn-ease);
+
+  .carCard:hover & {
+    transform: scale(1.05);
+  }
+}
+
+.cardOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-md);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+  color: var(--clr-txt-primary-on-accent-2);
+}
+
+.carName {
+  font-family: var(--ff-headings);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  margin: 0;
+  color: #ffffff;
+}
+
+.noResults {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: var(--fs-lg);
+  color: var(--clr-txt-secondary-on-bg-primary);
+}

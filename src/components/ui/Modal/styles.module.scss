@@ -1,0 +1,49 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 50;
+}
+
+.content {
+  background-color: var(--dialog-bg, #fff);
+  color: var(--text-color, #111);
+  border-radius: var(--radius, 0.5rem);
+  box-shadow: var(--dialog-shadow, 0 10px 25px rgba(0, 0, 0, 0.1));
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 480px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 60;
+  font-size: var(--fs-base);
+}
+
+.title {
+  font-weight: 600;
+  font-size: var(--fs-lg);
+  margin-bottom: 0.25rem;
+}
+
+.description {
+  font-size: var(--fs-sm);
+  margin-bottom: 1rem;
+  color: var(--text-muted, #666);
+}
+
+.body {
+  margin-top: 1rem;
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted, #666);
+  cursor: pointer;
+}

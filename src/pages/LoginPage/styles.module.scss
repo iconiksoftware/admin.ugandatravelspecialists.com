@@ -1,0 +1,187 @@
+@use '../../styles/utils';
+
+.loginPage {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    // A subtle dark overlay to make the card stand out
+    background-color: rgba(var(--clr-black-rgb), 0.5); // 50% opacity black
+    z-index: 1;
+  }
+
+  .loginCard {
+    position: relative;
+    z-index: 2; // Ensure card is above overlay
+    background-color: var(--clr-bg-primary); // White background for the card
+    padding: 28px;
+    border-radius: 12px; // More rounded corners for a softer feel
+    box-shadow: 0 10px 30px var(--clr-shadow); // More prominent shadow
+    text-align: center;
+    max-width: 450px;
+    width: 90%; // Responsive width
+    margin: 12px; // Add some margin on smaller screens
+    display: flex;
+    flex-direction: column;
+    align-items: center; // Center content inside the card
+
+    @include utils.respond-to('md-screens') {
+      max-width: 500px;
+    }
+
+    .logoContainer {
+      margin-bottom: 20px;
+
+      .logo {
+        height: 96px;
+        width: auto;
+      }
+    }
+
+    .title {
+      font-family: var(--ff-headings);
+      font-size: var(--fs-lg); // Larger title for impact
+      font-weight: var(--fw-bold);
+      color: var(--clr-txt-primary-on-bg-primary);
+      margin-bottom: var(--fs-md);
+      line-height: 1.2;
+
+      @include utils.respond-to('md-screens') {
+        font-size: var(--fs-xl);
+      }
+    }
+
+    .loginForm {
+      width: 100%; // Make form take full card width
+      display: flex;
+      flex-direction: column;
+      gap: 20px; // Space between form groups
+
+      // Form group styling is now primarily handled within the reusable components' SCSS
+      // However, ensure a common style for inputs here if not fully covered by component styles
+      input[type='email'],
+      input[type='password'],
+      input[type='text'] {
+        // Include text for password toggle
+        // These base styles ensure consistency even if not directly rendered here
+        // The specific styles from TextInput.module.scss and PasswordInput.module.scss will override/enhance these
+        // if they are defined in those respective modules.
+        // This block primarily serves as a fallback or general app-wide input style.
+        width: 100%;
+        border: 1px solid var(--clr-border-secondary-on-bg-primary);
+        border-radius: 8px;
+        font-family: var(--ff-body);
+        font-size: var(--fs-base);
+        background-color: var(--clr-bg-secondary);
+        color: var(--clr-txt-primary-on-bg-secondary);
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+        &:focus {
+          outline: none;
+          border-color: var(--clr-accent-1);
+          box-shadow: 0 0 0 3px rgba(var(--clr-accent-1-rgb), 0.2);
+        }
+
+        &.inputError {
+          border-color: var(--clr-error);
+          box-shadow: 0 0 0 1px var(--clr-error);
+        }
+      }
+
+      .formMessage {
+        font-family: var(--ff-body);
+        font-size: var(--fs-sm);
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        border-radius: 6px;
+        margin-top: -10px;
+        margin-bottom: 0;
+
+        &.errorMessage {
+          background-color: var(--clr-bg-error);
+          color: var(--clr-txt-primary-on-bg-error);
+          border: 1px solid var(--clr-border-primary-on-bg-error);
+        }
+
+        &.successMessage {
+          background-color: var(--clr-bg-success);
+          color: var(--clr-txt-primary-on-bg-success);
+          border: 1px solid var(--clr-border-primary-on-bg-success);
+        }
+      }
+
+      // Note: The individual input error message style is now within TextInput.module.scss
+      // and PasswordInput.module.scss, so it's directly tied to those components.
+
+      .forgotPasswordLink {
+        align-self: flex-end;
+        font-family: var(--ff-body);
+        font-size: var(--fs-sm);
+        color: var(--clr-accent-2);
+        text-decoration: none;
+        transition: color 0.3s ease;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .submitButton {
+        width: 100%;
+        padding: 16px 20px;
+        background-color: var(--clr-bg-accent-1);
+        color: var(--clr-txt-primary-on-bg-accent-1);
+        font-family: var(--ff-body);
+        font-size: var(--fs-md);
+        font-weight: var(--fw-semibold);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 4px 10px var(--clr-shadow);
+
+        &:hover {
+          transform: translateY(-2px);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+
+        &:disabled {
+          background-color: var(--clr-bg-secondary);
+          color: var(--clr-txt-secondary-on-bg-secondary);
+          cursor: not-allowed;
+          box-shadow: none;
+          opacity: 0.8;
+        }
+      }
+    }
+
+    .signupText {
+      font-family: var(--ff-body);
+      font-size: var(--fs-sm);
+      color: var(--clr-txt-secondary-on-bg-primary);
+      margin-top: 25px;
+
+      .signupLink {
+        font-weight: var(--fw-semibold);
+        color: var(--clr-accent-2);
+        text-decoration: none;
+        transition: color 0.3s ease;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
