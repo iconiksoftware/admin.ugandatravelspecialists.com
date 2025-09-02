@@ -1,40 +1,108 @@
 import React, { useState } from 'react';
+import z from 'zod';
 
 import styles from './styles.module.scss';
+import ImageInput from '../../components/ui/ImageInput';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+
+import TextInput from '../../components/ui/TextInput';
+import TextArea from '../../components/ui/TextArea';
+import Button from '../../components/ui/Button';
+import SelectInput from '../../components/ui/SelectInput';
+import {
+  DriveTypes,
+  FuelTypes,
+  TransmissionTypes,
+  useCreateCarMutation,
+  type DriveType,
+  type FuelType,
+  type TransmissionType,
+} from '../../api/carsApi';
+import { toLabel } from '../../lib/utils';
+import Switch from '../../components/ui/Switch';
+import MultipleImageInput from '../../components/ui/MultipleImageInput';
+
+const carSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  seats: z.string().transform((val) => parseInt(val, 10)),
+  pricePerDayUsd: z.string().transform((val) => parseInt(val, 10)),
+  pricePerDayUgx: z.string().transform((val) => parseInt(val, 10)),
+});
+
+type CreateCarFormInputs = z.infer<typeof carSchema>;
 
 const AddCarPage: React.FC = () => {
-  const [carData, setCarData] = useState({
-    name: '',
-    imageUrl: '',
+  const navigate = useNavigate();
+
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [selectedTransmissionType, setSelectedTransmissionType] = useState<TransmissionType | null>(null);
+  const [selectedFuelType, setSelectedFuelType] = useState<FuelType | null>(null);
+  const [selectedDriveType, setSelectedDriveType] = useState<DriveType | null>(null);
+  const [selfDriveAvailable, setSelfDriveAvailable] = useState(false);
+  const [photos, setPhotos] = useState<File[]>([]);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<CreateCarFormInputs>({
+    resolver: zodResolver(carSchema),
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setCarData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  const createCarMutation = useCreateCarMutation();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('New car data submitted:', carData);
+  const onSubmit: SubmitHandler<CreateCarFormInputs> = (data) => {
+    console.log(photo);
+    console.log(selectedDriveType);
+    console.log(selectedFuelType);
+    console.log(selectedTransmissionType);
 
-    // In a real application, you would send this data to a backend API.
+    if (photo && selectedTransmissionType && selectedFuelType && selectedDriveType) {
+      const toastId = toast.loading('Creating car...');
 
-    // Display a custom success message
-    const alertBox = document.createElement('div');
-    alertBox.className = styles.customAlert;
-    alertBox.innerHTML = `
-      <p class="${styles.alertMessage}">Car "${carData.name}" added successfully!</p>
-      <button onclick="this.parentNode.remove()" class="${styles.alertButton}">
-        OK
-      </button>
-    `;
-    document.body.appendChild(alertBox);
+      createCarMutation.mutate(
+        {
+          name: data.name,
+          description: data.description,
+          seats: data.seats,
+          pricePerDayUsd: data.pricePerDayUsd,
+          pricePerDayUgx: data.pricePerDayUgx,
+          drive: selectedDriveType,
+          fuelType: selectedFuelType,
+          transmissionType: selectedTransmissionType,
+          selfDriveAvailable,
+          photo,
+        },
+        {
+          onSuccess: (apiResponse) => {
+            toast.update(toastId, {
+              render: apiResponse.message || 'Car added successfully.',
+              type: 'success',
+              isLoading: false,
+              autoClose: 3000,
+            });
+            reset();
 
-    // Clear the form after submission
-    setCarData({ name: '', imageUrl: '' });
+            navigate('/cars');
+          },
+          onError: (errorMessage) => {
+            toast.update(toastId, {
+              render: errorMessage.message || 'An error occurred while creating the car.',
+              type: 'error',
+              isLoading: false,
+              autoClose: 3000,
+            });
+          },
+        },
+      );
+    } else {
+      toast.error('Validation error, check input data and try again');
+    }
   };
 
   return (
@@ -42,37 +110,53 @@ const AddCarPage: React.FC = () => {
       <div className={styles.formContainer}>
         <div className={styles.header}>
           <h1>Add New Car</h1>
-          <p>Fill in the details below to add a new car to your fleet.</p>
         </div>
 
-        <form onSubmit={handleSubmit} className={styles.addForm}>
-          <div className={styles.formGroup}>
-            <label htmlFor="name">Car Model</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={carData.name}
-              onChange={handleChange}
-              placeholder="e.g., Toyota Land Cruiser"
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="imageUrl">Image URL</label>
-            <input
-              type="url"
-              id="imageUrl"
-              name="imageUrl"
-              value={carData.imageUrl}
-              onChange={handleChange}
-              placeholder="e.g., https://example.com/car.jpg"
-              required
-            />
-          </div>
-          <button type="submit" className={styles.submitButton}>
-            Add Car
-          </button>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.addForm}>
+          <TextInput label="Name" name="name" type="tel" control={control as any} errors={errors} autoComplete="name" />
+
+          <TextArea label="Description" name="description" control={control as any} errors={errors} />
+
+          <SelectInput
+            label="Transmission type"
+            value={selectedTransmissionType}
+            onValueChange={(value) => setSelectedTransmissionType(value as any)}
+            options={TransmissionTypes.map((type) => ({
+              label: toLabel(type),
+              value: type,
+            }))}
+          />
+
+          <SelectInput
+            label="Fuel type"
+            value={selectedFuelType}
+            onValueChange={(value) => setSelectedFuelType(value as any)}
+            options={FuelTypes.map((type) => ({
+              label: toLabel(type),
+              value: type,
+            }))}
+          />
+
+          <SelectInput
+            label="Drive type"
+            value={selectedDriveType}
+            onValueChange={(value) => setSelectedDriveType(value as any)}
+            options={DriveTypes.map((type) => ({
+              label: toLabel(type),
+              value: type,
+            }))}
+          />
+
+          <TextInput label="Number of seats" name="seats" type="number" control={control as any} errors={errors} />
+          <TextInput label="Price per day (USD)" name="pricePerDayUsd" type="number" control={control as any} errors={errors} />
+          <TextInput label="Price per day (UGX)" name="pricePerDayUgx" type="number" control={control as any} errors={errors} />
+
+          <Switch label="Self drive" checked={selfDriveAvailable} onCheckedChange={setSelfDriveAvailable} />
+
+          <ImageInput label="Image" imageFile={photo} setImageFile={setPhoto} />
+
+          <MultipleImageInput label="Photos" value={photos} onChange={setPhotos} />
+          <Button>Add</Button>
         </form>
       </div>
     </div>

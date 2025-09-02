@@ -6,12 +6,9 @@
   margin-bottom: 8px;
 
   label {
-    display: block;
-    font-family: var(--ff-body);
     font-size: var(--fs-sm);
-    font-weight: var(--fw-medium);
+    font-weight: 700;
     color: var(--clr-txt-primary-on-bg-primary);
-    margin-bottom: 8px;
   }
 
   input {

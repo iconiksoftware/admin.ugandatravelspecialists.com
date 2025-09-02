@@ -4,12 +4,12 @@ import {
   Menu,
   X,
   Home,
-  Users,
+  // Users,
   LogOut,
-  FileChartColumn,
-  ChartArea,
-  Contact,
-  BanknoteArrowUp,
+  // FileChartColumn,
+  // ChartArea,
+  // Contact,
+  // BanknoteArrowUp,
   TentTree,
   Bus,
   Package,
@@ -23,27 +23,27 @@ const dashboardNavSections = [
     title: 'General',
     items: [
       { path: '/', label: 'Home', icon: Home },
-      { path: '/customers', label: 'Customers', icon: Users },
+      // { path: '/customers', label: 'Customers', icon: Users },
       { path: '/destinations', label: 'Destinations', icon: TentTree },
       { path: '/cars', label: 'Cars', icon: Bus },
       { path: '/tour-packages', label: 'Tour packages', icon: Package },
     ],
   },
-  {
-    title: 'Finance',
-    items: [
-      { path: '/reports', label: 'Reports', icon: FileChartColumn },
-      { path: '/expenses', label: 'Expenses', icon: BanknoteArrowUp },
-    ],
-  },
-  {
-    title: 'Management',
-    items: [
-      { path: '/reports', label: 'Reports', icon: ChartArea },
-      { path: '/staff', label: 'Staff', icon: Contact },
-      { path: '/audit-logs', label: 'Audit logs', icon: FileChartColumn },
-    ],
-  },
+  // {
+  //   title: 'Finance',
+  //   items: [
+  //     { path: '/reports', label: 'Reports', icon: FileChartColumn },
+  //     { path: '/expenses', label: 'Expenses', icon: BanknoteArrowUp },
+  //   ],
+  // },
+  // {
+  //   title: 'Management',
+  //   items: [
+  //     { path: '/reports', label: 'Reports', icon: ChartArea },
+  //     { path: '/staff', label: 'Staff', icon: Contact },
+  //     { path: '/audit-logs', label: 'Audit logs', icon: FileChartColumn },
+  //   ],
+  // },
 ];
 
 const DashboardLayout: React.FC = () => {

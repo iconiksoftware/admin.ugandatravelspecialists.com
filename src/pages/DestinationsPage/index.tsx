@@ -55,7 +55,7 @@ const DestinationsPage: React.FC = () => {
             </div>
           ))
         ) : (
-          <p className={styles.noResults}>No destinations found for "{searchQuery}".</p>
+          <p className={styles.noResults}>No destinations found.</p>
         )}
       </div>
     </div>

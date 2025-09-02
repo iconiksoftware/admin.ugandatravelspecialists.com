@@ -1,6 +1,6 @@
-import React from "react";
-import { Controller, type Control, type FieldErrors } from "react-hook-form"; // Import specific types for better typing
-import styles from "./styles.module.scss"; // Import component-specific styles
+import React from 'react';
+import { Controller, type Control, type FieldErrors } from 'react-hook-form'; // Import specific types for better typing
+import styles from './styles.module.scss'; // Import component-specific styles
 
 // Define a generic type for form data for better reusability
 interface FormValues extends Record<string, any> {}
@@ -10,7 +10,7 @@ interface TextInputProps {
   name: string;
   control: Control<FormValues>; // Use Control<FormValues> for generic compatibility
   errors: FieldErrors<FormValues>; // Use FieldErrors<FormValues> for generic compatibility
-  type?: "text" | "email" | "url" | "tel" | "search"; // Specify common text-like types
+  type?: 'text' | 'email' | 'url' | 'tel' | 'search' | 'number'; // Specify common text-like types
   placeholder?: string;
   autoComplete?: string;
   className?: string; // Allow optional className for external styling if needed
@@ -21,13 +21,13 @@ const TextInput: React.FC<TextInputProps> = ({
   name,
   control,
   errors,
-  type = "text",
+  type = 'text',
   placeholder,
   autoComplete,
   className,
 }) => {
   return (
-    <div className={`${styles.formGroup} ${className || ""}`}>
+    <div className={`${styles.formGroup} ${className || ''}`}>
       <label htmlFor={name}>{label}</label>
       <Controller
         name={name}
@@ -39,9 +39,9 @@ const TextInput: React.FC<TextInputProps> = ({
             id={name}
             placeholder={placeholder}
             // Apply inputError class if there's an error for this field
-            className={errors[name] ? styles.inputError : ""}
+            className={errors[name] ? styles.inputError : ''}
             autoComplete={autoComplete}
-            aria-invalid={errors[name] ? "true" : "false"} // ARIA attribute for accessibility
+            aria-invalid={errors[name] ? 'true' : 'false'} // ARIA attribute for accessibility
           />
         )}
       />
