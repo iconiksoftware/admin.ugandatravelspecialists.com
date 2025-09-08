@@ -24,8 +24,8 @@ const dashboardNavSections = [
     items: [
       { path: '/', label: 'Home', icon: Home },
       // { path: '/customers', label: 'Customers', icon: Users },
-      { path: '/destinations', label: 'Destinations', icon: TentTree },
       { path: '/cars', label: 'Cars', icon: Bus },
+      { path: '/destinations', label: 'Destinations', icon: TentTree },
       { path: '/tour-packages', label: 'Tour packages', icon: Package },
     ],
   },

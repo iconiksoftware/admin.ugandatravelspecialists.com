@@ -57,6 +57,7 @@ interface CreateCarMutationData {
   drive: DriveType;
   selfDriveAvailable: boolean;
   photo: File;
+  photos: File[];
 }
 
 export const useCreateCarMutation = () => {
@@ -76,6 +77,10 @@ export const useCreateCarMutation = () => {
       formData.append('drive', payload.drive);
       formData.append('selfDriveAvailable', String(payload.selfDriveAvailable));
       formData.append('photo', payload.photo);
+
+      for (const photo of payload.photos) {
+        formData.append('photos', photo);
+      }
 
       const apiResponse = (
         await apiClient.post<ApiResponse<Car>>('/cars', formData, {

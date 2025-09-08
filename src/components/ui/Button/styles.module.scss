@@ -1,5 +1,6 @@
-@use '../../../styles/utils';
 @use 'sass:color';
+
+@use '../../../styles/utils';
 
 .button {
   display: inline-flex;
@@ -88,14 +89,15 @@
     cursor: progress;
     opacity: 0.7;
     pointer-events: none;
+    background-color: #4d4d4d;
 
     .spinner {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       // Using direct rgba for the spinner border as it uses a CSS variable for text color
       // which is already a solid color. If var(--clr-txt-primary-on-bg-accent-1) was RGB,
       // it could be rgba(var(--clr-txt-primary-on-bg-accent-1-rgb), 0.3)
-      border: 3px solid rgba(255, 255, 255, 0.3); // Example: white with 30% opacity
+      border: 3px solid var(--clr-accent-1); // Example: white with 30% opacity
       border-top-color: var(--clr-txt-primary-on-bg-accent-1); // Solid color for the spinning part
       border-radius: 50%;
       animation: spin 1s linear infinite;

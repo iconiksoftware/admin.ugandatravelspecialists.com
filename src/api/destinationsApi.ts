@@ -26,7 +26,8 @@ export type Region = (typeof Regions)[number];
 export interface Destination {
   id: string;
   name: string;
-  photoUrl: string;
+  description: string;
+  primaryPhotoUrl: string;
   district: string;
   type: DestinationType;
   region: Region;
@@ -55,6 +56,7 @@ interface CreateDestinationMutationData {
   district: string;
   type: DestinationType;
   photo: File;
+  photos: File[];
 }
 
 export const useCreateDestinationMutation = () => {
@@ -70,6 +72,10 @@ export const useCreateDestinationMutation = () => {
       formData.append('district', payload.district);
       formData.append('type', payload.type);
       formData.append('photo', payload.photo);
+
+      for (const photo of payload.photos) {
+        formData.append('photos', photo);
+      }
 
       const apiResponse = (
         await apiClient.post<ApiResponse<Destination>>('/destinations', formData, {

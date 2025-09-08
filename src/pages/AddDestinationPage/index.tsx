@@ -19,6 +19,7 @@ import {
   type Region,
 } from '../../api/destinationsApi';
 import { toLabel } from '../../lib/utils';
+import MultipleImageInput from '../../components/ui/MultipleImageInput';
 
 const destinationSchema = z.object({
   name: z.string(),
@@ -48,6 +49,7 @@ const AddDestinationPage: React.FC = () => {
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
   const [selectedDestinationType, setSelectedDestinationType] = useState<DestinationType | null>(null);
   const [photo, setPhoto] = useState<File | null>(null);
+  const [photos, setPhotos] = useState<File[]>([]);
 
   const createDestinationMutation = useCreateDestinationMutation();
 
@@ -63,6 +65,7 @@ const AddDestinationPage: React.FC = () => {
           region: selectedRegion,
           type: selectedDestinationType,
           photo,
+          photos,
         },
         {
           onSuccess: (apiResponse) => {
@@ -123,6 +126,7 @@ const AddDestinationPage: React.FC = () => {
           />
 
           <ImageInput label="Image" imageFile={photo} setImageFile={setPhoto} />
+          <MultipleImageInput label="Photos" value={photos} onChange={setPhotos} />
 
           <Button isLoading={createDestinationMutation.isPending} disabled={createDestinationMutation.isPending}>
             Add

@@ -57,11 +57,6 @@ const AddCarPage: React.FC = () => {
   const createCarMutation = useCreateCarMutation();
 
   const onSubmit: SubmitHandler<CreateCarFormInputs> = (data) => {
-    console.log(photo);
-    console.log(selectedDriveType);
-    console.log(selectedFuelType);
-    console.log(selectedTransmissionType);
-
     if (photo && selectedTransmissionType && selectedFuelType && selectedDriveType) {
       const toastId = toast.loading('Creating car...');
 
@@ -77,6 +72,7 @@ const AddCarPage: React.FC = () => {
           transmissionType: selectedTransmissionType,
           selfDriveAvailable,
           photo,
+          photos,
         },
         {
           onSuccess: (apiResponse) => {
@@ -156,7 +152,7 @@ const AddCarPage: React.FC = () => {
           <ImageInput label="Image" imageFile={photo} setImageFile={setPhoto} />
 
           <MultipleImageInput label="Photos" value={photos} onChange={setPhotos} />
-          <Button>Add</Button>
+          <Button isLoading={createCarMutation.isPending}>Add</Button>
         </form>
       </div>
     </div>

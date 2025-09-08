@@ -48,7 +48,7 @@ const DestinationsPage: React.FC = () => {
         {filteredDestinations.length > 0 ? (
           filteredDestinations.map((destination) => (
             <div key={destination.id} className={styles.destinationCard}>
-              <div className={styles.cardImage} style={{ backgroundImage: `url(${destination.photoUrl})` }}></div>
+              <div className={styles.cardImage} style={{ backgroundImage: `url(${destination.primaryPhotoUrl})` }}></div>
               <div className={styles.cardOverlay}>
                 <h3 className={styles.destinationName}>{destination.name}</h3>
               </div>
