@@ -28,12 +28,18 @@ import MultipleImageInput from '../../components/ui/MultipleImageInput';
 const carSchema = z.object({
   name: z.string(),
   description: z.string(),
-  seats: z.string().transform((val) => parseInt(val, 10)),
-  pricePerDayUsd: z.string().transform((val) => parseInt(val, 10)),
-  pricePerDayUgx: z.string().transform((val) => parseInt(val, 10)),
+  seats: z.union([z.string(), z.number()]).pipe(z.coerce.number().min(1, 'Seats must be at least 1')),
+  pricePerDayUsd: z.union([z.string(), z.number()]).pipe(z.coerce.number().min(0, 'Price must be 0 or greater')),
+  pricePerDayUgx: z.union([z.string(), z.number()]).pipe(z.coerce.number().min(0, 'Price must be 0 or greater')),
 });
 
-type CreateCarFormInputs = z.infer<typeof carSchema>;
+type CreateCarFormInputs = {
+  name: string;
+  description: string;
+  seats: number;
+  pricePerDayUsd: number;
+  pricePerDayUgx: number;
+};
 
 const AddCarPage: React.FC = () => {
   const navigate = useNavigate();
@@ -52,6 +58,13 @@ const AddCarPage: React.FC = () => {
     reset,
   } = useForm<CreateCarFormInputs>({
     resolver: zodResolver(carSchema),
+    defaultValues: {
+      name: '',
+      description: '',
+      seats: 0,
+      pricePerDayUsd: 0,
+      pricePerDayUgx: 0,
+    },
   });
 
   const createCarMutation = useCreateCarMutation();

@@ -17,11 +17,16 @@ import { useCreateTourPackageMutation, type TourPackageItineraryItem } from '../
 const tourPackageSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   description: z.string().min(1, 'Description is required'),
-  pricePerPersonUgx: z.string().transform((val) => parseFloat(val)),
-  pricePerPersonUsd: z.string().transform((val) => parseFloat(val)),
+  pricePerPersonUgx: z.union([z.string(), z.number()]).pipe(z.coerce.number().min(0, 'Price must be 0 or greater')),
+  pricePerPersonUsd: z.union([z.string(), z.number()]).pipe(z.coerce.number().min(0, 'Price must be 0 or greater')),
 });
 
-type CreateTourPackageFormInputs = z.infer<typeof tourPackageSchema>;
+type CreateTourPackageFormInputs = {
+  name: string;
+  description: string;
+  pricePerPersonUgx: number;
+  pricePerPersonUsd: number;
+};
 
 const AddTourPackagePage: React.FC = () => {
   const navigate = useNavigate();
@@ -36,8 +41,8 @@ const AddTourPackagePage: React.FC = () => {
     defaultValues: {
       name: '',
       description: '',
-      pricePerPersonUgx: '0',
-      pricePerPersonUsd: '0',
+      pricePerPersonUgx: 0,
+      pricePerPersonUsd: 0,
     },
   });
 
